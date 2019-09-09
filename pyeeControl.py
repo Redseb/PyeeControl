@@ -4,6 +4,7 @@ from yeelight import Bulb
 from yeelight import discover_bulbs
 
 listOfBulbs = []
+brightness = 100
 
 def searchForBulbs():
     global listOfBulbs
@@ -32,6 +33,17 @@ def changeColor():
     for bulb in listOfBulbs:
         bulb.set_rgb(int(rgb[0]), int(rgb[1]), int(rgb[2]))
     window.configure(background=hexVal)
+
+def updateBrightness(value):
+    global brightness
+    brightness = value
+
+def setBrightness():
+    global brightness
+    global listOfBulbs
+    global brightnessScale
+    for bulb in listOfBulbs:
+        bulb.set_brightness(int(brightness))
     
 
 
@@ -46,7 +58,8 @@ label = tkinter.Label(window, text = "Welcome to PyeeControl").pack()
 searchBtn = tkinter.Button(top_frame, text = "Search for Bulbs", command = searchForBulbsGUI).pack()
 toggleBtn = tkinter.Button(top_frame, text = "Toggle All", command = toggleAll).pack()
 colorBtn = tkinter.Button(top_frame, text = "Change Color", command = changeColor).pack()
-# # btn4 = tkinter.Button(bottom_frame, text = "button4", fg = "orange").pack(side = "left")
+brightnessScale = tkinter.Scale(window, from_=0, to=100, orient = tkinter.HORIZONTAL, command = updateBrightness).pack()
+setBrightness = tkinter.Button(top_frame, text = "Set Brightness", command = setBrightness).pack()
 
 # tkinter.Label(window, text = "Suf. width", fg = "white", bg = "purple").pack()
 # tkinter.Label(window, text = "Taking all available X width", fg = "white", bg = "green").pack(fill = "x")
