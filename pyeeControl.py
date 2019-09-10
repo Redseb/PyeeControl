@@ -20,13 +20,13 @@ def searchForBulbsGUI():
     global listOfBulbs
     listOfBulbs = searchForBulbs()
     for bulb in listOfBulbs:
+        bulb.start_music()
         tkinter.Label(bottom_frame, text = str(bulb)).pack()
 
 def toggleAll():
     global listOfBulbs
     for bulb in listOfBulbs:
         bulb.toggle()
-        bulb.start_music()
 
 def changeColor():
     global listOfBulbs
@@ -86,13 +86,16 @@ brightnessScale = tkinter.Scale(top_frame, from_=0, to=100, orient = tkinter.HOR
 setBrightness = tkinter.Button(top_frame, text = "Set Brightness", command = setBrightness).pack()
 matchScreenBox = tkinter.Checkbutton(top_frame, text = "Match Screen", variable = matchScreen).pack()
 
+
 #Main program loop, cupdate tkinter window and check for matchScreen
 
 while(True):
     window.update_idletasks()
     window.update()
-    if(matchScreen.get() == 1):
+    if matchScreen.get() == 1:
         screen = pyautogui.screenshot()
         rgb = averageRGB(screen)
         for bulb in listOfBulbs:
+            if bulb.get_properties().get('music_on') == 0:
+                bulb.start_music()
             bulb.set_rgb(int(rgb[0]), int(rgb[1]), int(rgb[2]))
