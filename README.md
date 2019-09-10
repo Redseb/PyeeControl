@@ -19,4 +19,4 @@ Pressing `Change Color` will prompt you to select a color for the light, if the 
 
 # Matching the Screen Color
 
-Toggling the `Screen Match` checkbox will start automatically matching the color of your yeelight devices with the average color of your screen. **Note: **This feature can be resource intensive and is not guaranteed to work perfectly
+Toggling the `Screen Match` checkbox will start automatically matching the color of your yeelight devices with the average color of your screen. **Note:** This feature can be resource intensive and is not guaranteed to work perfectly
