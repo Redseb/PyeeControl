@@ -17,6 +17,10 @@ After the bulbs have appeared in the window press `Toggle All` to toggle the lig
 
 Pressing `Change Color` will prompt you to select a color for the light, if the lights are on the color will be changed!
 
+# Selecting and Toggling a Flow
+
+There are a couple of premade *Flows*, light scenes such as 'Police' which will alternate your light's colors between red and blue. Select a flow scene from the dropdown menu and then press `Toggle Flow` to start and stop the flow.
+
 # Matching the Screen Color
 
 Toggling the `Screen Match` checkbox will start automatically matching the color of your yeelight devices with the average color of your screen. **Note:** This feature can be resource intensive and is not guaranteed to work perfectly

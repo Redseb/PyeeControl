@@ -1,12 +1,26 @@
 import tkinter
 from tkinter.colorchooser import *
-from yeelight import Bulb, discover_bulbs
+from yeelight import Bulb, discover_bulbs, transitions, Flow
 from PIL import Image
 import pyautogui
 
 listOfBulbs = []
 brightness = 100
-
+isFlow = False
+preMadeTransitions = {
+    'Alarm' : transitions.alarm(),
+    'Christmas' : transitions.christmas(),
+    'Disco' : transitions.disco(),
+    'LSD' : transitions.lsd(),
+    'Police' : transitions.police(),
+    'Police 2' : transitions.police2(),
+    'Random Loop' : transitions.randomloop(),
+    'RGB' : transitions.rgb(),
+    'Slowdown' : transitions.slowdown(),
+    'Strobe' : transitions.strobe(),
+    'Strobe Color' : transitions.strobe_color(),
+    'Temp' : transitions.temp()
+}
 
 def searchForBulbs():
     global listOfBulbs
@@ -48,6 +62,18 @@ def setBrightness():
     for bulb in listOfBulbs:
         bulb.set_brightness(int(brightness))
 
+def toggleFlow():
+    global listOfBulbs
+    global isFlow
+    isFlow = not isFlow
+    if isFlow:
+        for bulb in listOfBulbs:
+            bulb.start_flow(Flow(0, Flow.actions.recover, preMadeTransitions[flowOption.get()]))
+    else:
+        for bulb in listOfBulbs:
+            bulb.stop_flow()
+
+
 def averageRGB(image):
     pixels = screen.load()
     width = image.size[0]
@@ -73,6 +99,8 @@ def averageRGB(image):
 window = tkinter.Tk()
 window.title("PyeeControl")
 matchScreen = tkinter.IntVar()
+flowOption = tkinter.StringVar(window)
+flowOption.set('Alarm')
 
 top_frame = tkinter.Frame(window, background = "blue").pack()
 bottom_frame = tkinter.Frame(window).pack(side = "bottom")
@@ -84,6 +112,8 @@ toggleBtn = tkinter.Button(top_frame, text = "Toggle All", command = toggleAll).
 colorBtn = tkinter.Button(top_frame, text = "Change Color", command = changeColor).pack()
 brightnessScale = tkinter.Scale(top_frame, from_=0, to=100, orient = tkinter.HORIZONTAL, command = updateBrightness).pack()
 setBrightness = tkinter.Button(top_frame, text = "Set Brightness", command = setBrightness).pack()
+flowOptions = tkinter.OptionMenu(top_frame, flowOption, *preMadeTransitions.keys()).pack()
+flowBtn = tkinter.Button(top_frame, text = "Toggle Flow", command = toggleFlow).pack()
 matchScreenBox = tkinter.Checkbutton(top_frame, text = "Match Screen", variable = matchScreen).pack()
 
 
